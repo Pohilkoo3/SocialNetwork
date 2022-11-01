@@ -1,16 +1,53 @@
 spring:
-  application:
+  mail:
+    username: mailUser
+    port: '587'
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: 'true'
+          auth: 'true'
+    host: smtp.mailhost.com
+    password: mailPass
+  thymeleaf:
+    check-template-location: 'false'
+    cache: 'false'
+    mode: HTML
+  application: 'null'
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: 'true'
   name: socialNet
-
+  datasource:
+    tomcat:
+      max-active: '5'
+      max-wait: '10000'
+      test-on-borrow: 'true'
 server:
-  port: 8081
-
+  error:
+    whitelabel:
+      enabled: 'false'
+  address: 127.0.0.1
+  tomcat:
+    accessors:
+      enabled: 'true'
+  port: '8081'
+logging:
+  level:
+    org:
+      hibernate: ERROR
+      springframework:
+        web: DEBUG
 datasource:
-  url: jdbc:postgresql://localhost:5455/postgres
-  username: admin
+  url: jdbc:postgresql://localhost:5432/postgres
   password: passWd123
-
+  username: admin
+  driver-class-name: org.postgresql.Driver
 jpa:
+  database: postgresql
+  database-platform: org.hibernate.dialect.PostgresSQL10Dialect
   properties:
     hibernate:
       ddl-auto: update
