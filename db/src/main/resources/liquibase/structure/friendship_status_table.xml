@@ -6,9 +6,9 @@
 
     <changeSet id="friendship_status_table" author="Kolokolnin_Pavel">
 
-        <preConditions>
+        <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists schemaName="friendship_status" tableName="friendship_status_table"/>
+                <tableExists  tableName="friendship_status_table"/>
             </not>
         </preConditions>
 

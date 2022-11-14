@@ -1,6 +1,5 @@
 server:
   port: 8086
-
   db:
     port: http://localhost:8081
 
