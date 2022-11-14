@@ -8,7 +8,7 @@
 
         <preConditions>
             <not>
-                <tableExists schemaName="message" tableName="message_table"/>
+                <tableExists  tableName="message_table"/>
             </not>
         </preConditions>
 
@@ -36,6 +36,7 @@
         </createTable>
 
         <addPrimaryKey columnNames="id" constraintName="message_table_pkey" tableName="message_table"/>
+
 
     </changeSet>
 

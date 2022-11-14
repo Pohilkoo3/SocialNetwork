@@ -20,5 +20,9 @@
    <include file="structure/create_table_person.xml" relativeToChangelogFile="true"/>
    <include file="structure/post_like_table.xml" relativeToChangelogFile="true"/>
    <include file="structure/post_comment_table.xml" relativeToChangelogFile="true"/>
+   <include file="structure/created_friendship_status_table.xml" relativeToChangelogFile="true"/>
+   <include file="structure/created_message_table.xml" relativeToChangelogFile="true"/>
+   <include file="structure/created_post_table.xml" relativeToChangelogFile="true"/>
+   <include file="structure/delete_table_script.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

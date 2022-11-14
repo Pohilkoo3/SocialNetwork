@@ -7,11 +7,11 @@
 
         <preConditions>
             <not>
-                <tableExists schemaName="post" tableName="post_table"/>
+                <tableExists  tableName="post_table"/>
             </not>
         </preConditions>
 
-        <createTable tableName="posts_table">
+        <createTable tableName="post_table">
 
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints nullable="false"/>
@@ -34,7 +34,8 @@
 
         </createTable>
 
-        <addPrimaryKey columnNames="id" constraintName="posts_table_pkey" tableName="posts_table"/>
+        <addPrimaryKey columnNames="id" constraintName="post_table_pkey" tableName="post_table"/>
+
 
     </changeSet>
 
