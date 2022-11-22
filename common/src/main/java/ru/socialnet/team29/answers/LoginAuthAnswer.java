@@ -14,16 +14,9 @@ public class LoginAuthAnswer
 {
     private String error;
     @JsonProperty(value = "timestamp")
-    private LocalDateTime requestTime;
+    private Long requestTime;
     @JsonProperty(value = "data")
     private Person person;
-
-    @JsonProperty(value = "messages_permission")
-    private String messagesPermission;
-    @JsonProperty(value = "last_online_time")
-    private Long lastOnlineTime;
-    @JsonProperty(value = "is_blocked")
-    private Boolean isBlocked;
     private String token;
 
 }

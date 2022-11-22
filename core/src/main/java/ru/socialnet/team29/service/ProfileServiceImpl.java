@@ -39,6 +39,9 @@ public class ProfileServiceImpl implements ProfileService {
                         .about("Родился в небольшой, но честной семье")
                         .city(new City(1L,"Москва"))
                         .country(new Country(1L,"Россия"))
+                        .messagesPermission("ALL")
+                        .lastOnlineTime(System.currentTimeMillis())
+                        .isBlocked(false)
                         .build())
                 .build();
         return profileResponse;

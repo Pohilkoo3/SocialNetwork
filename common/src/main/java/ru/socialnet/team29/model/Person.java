@@ -35,5 +35,15 @@ public class Person {
     private String about;
     private City city;
     private Country country;
+    @JsonProperty(value = "messages_permission")
+    private String messagesPermission;
+    @JsonProperty(value = "last_online_time")
+    private Long lastOnlineTime;
+    @JsonProperty(value = "is_blocked")
+    private Boolean isBlocked;
+
+
+
+
 
 }

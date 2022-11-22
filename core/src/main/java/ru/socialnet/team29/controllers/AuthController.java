@@ -36,21 +36,20 @@ public class AuthController {
 
 
     @PostMapping(value = "/login")
+    @ResponseBody
     public ResponseEntity<LoginAuthAnswer> loginPage(@RequestBody PersonLoginDTO person,
-                                                     HttpServletResponse response) throws IOException {
+                                                     HttpServletResponse response,
+                                                     HttpServletRequest request) throws IOException {
         log.info(this.getClass().getSimpleName() + ": " + person.getEmail() + " пытается войти.");
         MessageAnswer answer = userRegister.jwtLogin(person);
         Cookie cookie = new Cookie("token", answer.getMessage());
+        cookie.setPath("/");
         response.addCookie(cookie);
-
         log.info(this.getClass().getSimpleName() + ": " + "Посылаем запрос для формирования ответа для фронта по person.");
         Person personFromDb = userDataService.getPersonByEmail(person.getEmail());
         LoginAuthAnswer authAnswer = new LoginAuthAnswer("",
-                LocalDateTime.now()
+                System.currentTimeMillis()
                 , personFromDb
-                , "ALL"
-                , System.currentTimeMillis()
-                , false
                 , answer.getMessage()
         );
 
