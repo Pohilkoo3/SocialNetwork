@@ -11,4 +11,5 @@ public class ContactConfirmationPayload {
     private String lastName;
     private String passwd1;
     private String passwd2;
+    private String token;
 }

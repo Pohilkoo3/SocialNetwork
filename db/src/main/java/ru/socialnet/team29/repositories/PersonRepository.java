@@ -1,4 +1,4 @@
-package ru.socialnet.team29;
+package ru.socialnet.team29.repositories;
 
 
 import lombok.RequiredArgsConstructor;

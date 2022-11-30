@@ -1,0 +1,41 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="fill-notification-type" author="Pokhilko">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="notification_type"/>
+            </not>
+        </preConditions>
+        <insert  schemaName="socialnet"
+                 tableName="notification_type">
+            <column  name="code"  value="1"/>
+            <column  name="name"  value="POST"/>
+        </insert>
+        <insert  schemaName="socialnet"
+                 tableName="notification_type">
+            <column  name="code"  value="2"/>
+            <column  name="name"  value="POST_COMMENT"/>
+        </insert>
+        <insert  schemaName="socialnet"
+                 tableName="notification_type">
+            <column  name="code"  value="3"/>
+            <column  name="name"  value="COMMENT_COMMENT"/>
+        </insert>
+        <insert  schemaName="socialnet"
+                 tableName="notification_type">
+            <column  name="code"  value="4"/>
+            <column  name="name"  value="FRIEND_REQUEST"/>
+        </insert>
+        <insert  schemaName="socialnet"
+                 tableName="notification_type">
+            <column  name="code"  value="5"/>
+            <column  name="name"  value="MESSAGE"/>
+        </insert>
+
+
+    </changeSet>
+</databaseChangeLog>

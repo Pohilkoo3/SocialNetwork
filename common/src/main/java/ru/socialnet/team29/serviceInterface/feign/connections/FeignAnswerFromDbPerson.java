@@ -2,10 +2,10 @@ package ru.socialnet.team29.serviceInterface.feign.connections;
 
 import org.springframework.stereotype.Component;
 import ru.socialnet.team29.model.Person;
-import ru.socialnet.team29.serviceInterface.feign.DBConnectionFeignInterface;
+import ru.socialnet.team29.serviceInterface.feign.interfaces.DBConnectionFeignInterface;
 
 @Component
-public class FeignAnswerFromDb implements DBConnectionFeignInterface {
+public class FeignAnswerFromDbPerson implements DBConnectionFeignInterface {
 
     @Override
     public Person savePerson(Person person) {
