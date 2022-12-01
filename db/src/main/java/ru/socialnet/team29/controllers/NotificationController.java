@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.socialnet.team29.answers.NotificationForFront;
 import ru.socialnet.team29.domain.tables.records.NotificationRecord;
 import ru.socialnet.team29.interfaceDb.NotificationInterface;
 import ru.socialnet.team29.model.Notification;
@@ -27,9 +28,9 @@ public class NotificationController {
     }
 
     @GetMapping("/notifications")
-    public List<Notification> getAllNotificationsByPersonId(@RequestParam("idPerson") Integer idPerson){
+    public List<NotificationForFront> getAllNotificationsByPersonId(@RequestParam("idPerson") Integer idPerson){
         log.info("Получили запрос от core - Найти все уведомления пользователя => " + idPerson);
-        List<Notification> notificationsList = notificationService.getAllNotificationsById(idPerson);
+        List<NotificationForFront> notificationsList = notificationService.getAllNotificationsById(idPerson);
         return notificationsList;
     }
 }

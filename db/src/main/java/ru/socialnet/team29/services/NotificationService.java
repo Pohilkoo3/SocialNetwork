@@ -2,6 +2,7 @@ package ru.socialnet.team29.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.socialnet.team29.answers.NotificationForFront;
 import ru.socialnet.team29.domain.tables.records.NotificationRecord;
 import ru.socialnet.team29.interfaceDb.NotificationInterface;
 import ru.socialnet.team29.model.Notification;
@@ -22,7 +23,10 @@ public class NotificationService implements NotificationInterface{
     }
 
     @Override
-    public List<Notification> getAllNotificationsById(Integer idPerson) {
+    public List<NotificationForFront> getAllNotificationsById(Integer idPerson) {
         return notificationRepository.getAllNotificationsByPersonsId(idPerson);
     }
+
+
+
 }

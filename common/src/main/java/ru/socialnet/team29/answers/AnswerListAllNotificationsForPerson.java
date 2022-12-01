@@ -6,15 +6,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.socialnet.team29.model.Notification;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class AnswerListAllNotificationsForPerson {
-    private Long timestamp;
+
+    private LocalDateTime timeStamp;
 
     @JsonProperty(value = "data")
-    private List<Notification> countNotifications;
+    private List<NotificationForFront> countNotifications;
 
 }

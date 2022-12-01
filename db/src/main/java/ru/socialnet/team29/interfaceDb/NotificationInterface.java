@@ -1,5 +1,6 @@
 package ru.socialnet.team29.interfaceDb;
 
+import ru.socialnet.team29.answers.NotificationForFront;
 import ru.socialnet.team29.domain.tables.records.NotificationRecord;
 import ru.socialnet.team29.model.Notification;
 import ru.socialnet.team29.model.Person;
@@ -10,5 +11,5 @@ public interface NotificationInterface {
 
     Integer getCountNotificationsById(Integer id);
 
-    List<Notification> getAllNotificationsById(Integer idPerson);
+    List<NotificationForFront> getAllNotificationsById(Integer idPerson);
 }

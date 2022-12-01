@@ -52,6 +52,13 @@ public class PersonRepository {
                 .fetch()
                 .into(PersonRecord.class);
     }
+    public ru.socialnet.team29.model.Person findOnePersonModelByEmail(String email) {
+        initDsl();
+        return dsl.selectFrom(Person.PERSON)
+                .where(Person.PERSON.EMAIL.equalIgnoreCase(email))
+                .fetchOne()
+                .into(ru.socialnet.team29.model.Person.class);
+    }
 
     private void initDsl() {
         if (dsl == null) {
