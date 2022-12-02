@@ -37,6 +37,15 @@ public class PersonRepository {
                 .into(PersonRecord.class);
     }
 
+    public String findEmailByPersonId(int id){
+        initDsl();
+        return dsl.selectFrom(Person.PERSON)
+                .where(Person.PERSON.ID.eq(id))
+                .fetchOne()
+                .into(ru.socialnet.team29.model.Person.class)
+                .getEmail();
+    }
+
 
     public Boolean delete(Integer id) {
      initDsl();

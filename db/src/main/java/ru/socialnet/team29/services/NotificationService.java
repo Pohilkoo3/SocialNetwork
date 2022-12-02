@@ -2,10 +2,10 @@ package ru.socialnet.team29.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.socialnet.team29.answers.AddNewNotification;
 import ru.socialnet.team29.answers.NotificationForFront;
-import ru.socialnet.team29.domain.tables.records.NotificationRecord;
 import ru.socialnet.team29.interfaceDb.NotificationInterface;
-import ru.socialnet.team29.model.Notification;
+import ru.socialnet.team29.payloads.AddNotificationPayload;
 import ru.socialnet.team29.repositories.NotificationRepository;
 
 import java.util.List;
@@ -19,7 +19,6 @@ public class NotificationService implements NotificationInterface{
 
     public Integer getCountNotificationsById(Integer id) {
        return notificationRepository.getCountNotificationByPersonId(id);
-
     }
 
     @Override
@@ -27,6 +26,9 @@ public class NotificationService implements NotificationInterface{
         return notificationRepository.getAllNotificationsByPersonsId(idPerson);
     }
 
-
+    @Override
+    public AddNewNotification saveNewNotification(AddNotificationPayload payload) {
+        return notificationRepository.addNewNotification(payload);
+    }
 
 }

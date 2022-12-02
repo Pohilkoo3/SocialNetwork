@@ -3,7 +3,6 @@ package ru.socialnet.team29.answers;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import ru.socialnet.team29.model.Person;
-import ru.socialnet.team29.model.enums.NotificationType;
 
 import java.time.LocalDateTime;
 @Data

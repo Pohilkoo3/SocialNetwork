@@ -1,8 +1,10 @@
 package ru.socialnet.team29.serviceInterface.feign.connections;
 
 import org.springframework.stereotype.Component;
+import ru.socialnet.team29.answers.AddNewNotification;
 import ru.socialnet.team29.answers.NotificationForFront;
 import ru.socialnet.team29.model.Notification;
+import ru.socialnet.team29.payloads.AddNotificationPayload;
 import ru.socialnet.team29.serviceInterface.feign.interfaces.DBConnectionFeignInterfaceNotification;
 
 import java.util.List;
@@ -18,6 +20,11 @@ public class FeignAnswerFromDbNotification implements DBConnectionFeignInterface
 
     @Override
     public List<NotificationForFront> getAllNotificationsById(Integer idPerson) {
+        return null;
+    }
+
+    @Override
+    public AddNewNotification saveNewNotification(AddNotificationPayload payload) {
         return null;
     }
 }
