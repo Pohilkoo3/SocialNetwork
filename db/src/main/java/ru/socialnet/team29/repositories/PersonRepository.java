@@ -69,6 +69,15 @@ public class PersonRepository {
                 .into(ru.socialnet.team29.model.Person.class);
     }
 
+    public int findIdPersonByEmail(String email) {
+        initDsl();
+        PersonRecord personRecord = dsl.selectFrom(Person.PERSON)
+                .where(Person.PERSON.EMAIL.equalIgnoreCase(email))
+                .fetchOne();
+        return personRecord != null ? personRecord.getId() : -1;
+
+    }
+
     private void initDsl() {
         if (dsl == null) {
             dsl = dslContextCustom.initDslContext();

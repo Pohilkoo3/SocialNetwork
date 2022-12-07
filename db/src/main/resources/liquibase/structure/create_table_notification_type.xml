@@ -7,9 +7,7 @@ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
     <changeSet id="create_table_notification_type" author="Nedovizin">
         <preConditions onFail="MARK_RAN">
-            <not>
                 <tableExists schemaName="socialnet" tableName="notification_type"/>
-            </not>
         </preConditions>
         <createTable tableName="notification_type" schemaName="socialnet" remarks="Тип оповещения">
             <column autoIncrement="true" name="id" type="integer" remarks="Идентификатор">

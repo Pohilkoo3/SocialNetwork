@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.socialnet.team29.model.Notification;
 
 import java.time.LocalDateTime;
 import java.util.List;

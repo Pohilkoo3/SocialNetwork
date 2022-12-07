@@ -7,10 +7,10 @@
   <changeSet id="create_table_notification" author="Goriacheva">
     <preConditions onFail="MARK_RAN">
       <not>
-        <tableExists schemaName="socialnet" tableName="notification"/>
+        <tableExists schemaName="socialnet" tableName="notificationCommon"/>
       </not>
     </preConditions>
-    <createTable tableName="notification" schemaName="socialnet" remarks="Оповещения">
+    <createTable tableName="notificationCommon" schemaName="socialnet" remarks="Оповещения">
       <column autoIncrement="true" name="id" type="integer" remarks="Идентификатор">
         <constraints primaryKey="true" nullable="false"/>
       </column>

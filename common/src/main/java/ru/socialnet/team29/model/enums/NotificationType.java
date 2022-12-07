@@ -6,7 +6,7 @@ import lombok.*;
 @Getter
 public enum NotificationType {
     
-    Post(1, "Post"), POST_COMMENT(2, "POST_COMMENT"),COMMENT_COMMENT(3, "COMMENT_COMMENT"),
+    Post(1, "POST"), POST_COMMENT(2, "POST_COMMENT"),COMMENT_COMMENT(3, "COMMENT_COMMENT"),
     FRIEND_REQUEST(4, "FRIEND_REQUEST"),MESSAGE(5, "MESSAGE");
     private int number;
     private String value;
@@ -21,7 +21,6 @@ public enum NotificationType {
         }
        return null;
     }
-
 
     @Override
     public String toString() {

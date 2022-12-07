@@ -6,13 +6,11 @@ import org.springframework.stereotype.Repository;
 import ru.socialnet.team29.answers.AddNewNotification;
 import ru.socialnet.team29.answers.NotificationForFront;
 import ru.socialnet.team29.domain.tables.Notification;
-import ru.socialnet.team29.model.Person;
-import ru.socialnet.team29.model.enums.NotificationType;
+import ru.socialnet.team29.mappers.NotificationMapperClass;
+import ru.socialnet.team29.model.NotificationCommon;
 import ru.socialnet.team29.payloads.AddNotificationPayload;
 import ru.socialnet.team29.services.DslContextCustom;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -21,7 +19,8 @@ public class NotificationRepository {
 
     private final DslContextCustom dslContextCustom;
     private static DSLContext dsl;
-    private final PersonRepository personRepository;
+
+    private final NotificationMapperClass notificationMapperClass;
 
     private void initDsl() {
         if (dsl == null) {
@@ -35,69 +34,48 @@ public class NotificationRepository {
                 .where(Notification.NOTIFICATION.PERSON_ID.eq(id))
                 .fetch()
                 .size();
+    }
 
+
+    public List<NotificationCommon> getNotificationCommonTrain(Integer idPerson) {
+        initDsl();
+        List<NotificationCommon> notificationCommonList = dsl.selectFrom(Notification.NOTIFICATION)
+                .where(Notification.NOTIFICATION.PERSON_ID.eq(idPerson))
+                .fetch()
+                .into(NotificationCommon.class);
+    return notificationCommonList;
     }
 
 
     public List<NotificationForFront> getAllNotificationsByPersonsId(Integer idPerson) {
         initDsl();
-        List<ru.socialnet.team29.model.Notification> notificationList = dsl.selectFrom(Notification.NOTIFICATION)
+        List<NotificationCommon> notificationCommonList = dsl.selectFrom(Notification.NOTIFICATION)
                 .where(Notification.NOTIFICATION.PERSON_ID.eq(idPerson))
                 .fetch()
-                .into(ru.socialnet.team29.model.Notification.class);
-        List<NotificationForFront> result = new ArrayList<>();
-        for (ru.socialnet.team29.model.Notification notification : notificationList) {
-            NotificationForFront forFront = new NotificationForFront();
-            forFront.setId(notification.getId());
-            Person person = personRepository.findOnePersonModelByEmail(notification.getContact());
-            forFront.setPerson(person);
-            forFront.setContent("");
-            forFront.setNotificationType(NotificationType.getTypeEnum(notification.getTypeId()));
-            forFront.setSentTime(notification.getSentTime());
-            result.add(forFront);
-        }
-        return result;
+                .into(NotificationCommon.class);
+       return notificationMapperClass.listNotificationCommonToListNotificationForFront(notificationCommonList);
     }
 
     public AddNewNotification addNewNotification(AddNotificationPayload payload) throws NullPointerException {
         initDsl();
-        ru.socialnet.team29.model.Notification notification = getNotificationFromPayload(payload);
-        ru.socialnet.team29.model.Notification notificationSaved = dsl.insertInto(Notification.NOTIFICATION)
-                .set(dsl.newRecord(Notification.NOTIFICATION, notification))
+        NotificationCommon notificationCommon = notificationMapperClass.addNotificationPayloadToNotificationCommon(payload);
+        NotificationCommon notificationCommonSaved = dsl.insertInto(Notification.NOTIFICATION)
+                .set(dsl.newRecord(Notification.NOTIFICATION, notificationCommon))
                 .returning()
                 .fetchOne()
-                .into(ru.socialnet.team29.model.Notification.class);
-        return createAddNewNotification(notificationSaved, payload);
-    }
-
-    private ru.socialnet.team29.model.Notification getNotificationFromPayload(AddNotificationPayload payload) {
-        ru.socialnet.team29.model.Notification notification = new ru.socialnet.team29.model.Notification();
-        notification.setTypeId(payload.getNotificationTypeId());
-        notification.setSentTime(LocalDateTime.now());
-        notification.setPersonId(Integer.parseInt(payload.getUserId()));
-        notification.setContact(personRepository.findEmailByPersonId(Integer.parseInt(payload.getAuthorId())));
-        return notification;
-    }
-
-    private AddNewNotification createAddNewNotification(ru.socialnet.team29.model.Notification notificationSaved, AddNotificationPayload payload) {
-        AddNewNotification answer = new AddNewNotification();
-        answer.setId(String.valueOf(notificationSaved.getId()));
-        answer.setUserId(payload.getUserId());
-        answer.setTime(LocalDateTime.now());
-        answer.setAuthorId(payload.getAuthorId());
-        answer.setNotificationType(payload.getNotificationType());
-        answer.setIsStatusSent(true);
-        return answer;
+                .into(NotificationCommon.class);
+        return notificationMapperClass.notificationCommonToAddNewNotification(notificationCommonSaved);
     }
 
 
-    public ru.socialnet.team29.model.Notification addNewNotificationTest(ru.socialnet.team29.model.Notification notification) {
+
+    public NotificationCommon addNewNotificationTest(NotificationCommon notificationCommon) {
         initDsl();
         return dsl.insertInto(Notification.NOTIFICATION)
-                .set(dsl.newRecord(Notification.NOTIFICATION, notification))
+                .set(dsl.newRecord(Notification.NOTIFICATION, notificationCommon))
                 .returning()
                 .fetchOne()
-                .into(ru.socialnet.team29.model.Notification.class);
+                .into(NotificationCommon.class);
     }
 
 }
