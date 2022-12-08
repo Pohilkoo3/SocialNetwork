@@ -13,7 +13,7 @@ import ru.socialnet.team29.answers.ResponseUserRegister;
 import ru.socialnet.team29.answers_interface.CommonAnswer;
 import ru.socialnet.team29.model.Person;
 import ru.socialnet.team29.payloads.ContactConfirmationPayload;
-import ru.socialnet.team29.serviceInterface.feign.interfaces.DBConnectionFeignInterface;
+import ru.socialnet.team29.serviceInterface.feign.DBConnectionFeignInterface;
 
 import java.time.LocalDateTime;
 

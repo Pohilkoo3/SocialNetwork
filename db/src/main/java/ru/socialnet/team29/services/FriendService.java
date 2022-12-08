@@ -2,7 +2,6 @@ package ru.socialnet.team29.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.socialnet.team29.PersonRepository;
 import ru.socialnet.team29.domain.tables.Person;
 import ru.socialnet.team29.domain.tables.records.FriendshipRecord;
 import ru.socialnet.team29.domain.tables.records.PersonRecord;
@@ -10,6 +9,7 @@ import ru.socialnet.team29.interfaceDb.FriendInterface;
 import ru.socialnet.team29.mappers.FriendMapperImpl;
 import ru.socialnet.team29.model.FriendForFront;
 import ru.socialnet.team29.repositories.FriendRepository;
+import ru.socialnet.team29.repository.PersonRepository;
 
 import java.util.ArrayList;
 import java.util.List;

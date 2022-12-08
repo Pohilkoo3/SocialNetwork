@@ -1,14 +1,11 @@
 package ru.socialnet.team29.serviceInterface.feign.connections;
 
-import java.security.Principal;
-import java.util.List;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.socialnet.team29.model.FriendForFront;
 import ru.socialnet.team29.model.Person;
 import ru.socialnet.team29.model.PostDto;
 import ru.socialnet.team29.serviceInterface.feign.DBConnectionFeignInterface;
-import ru.socialnet.team29.serviceInterface.feign.interfaces.DBConnectionFeignInterface;
 
 import java.util.List;
 

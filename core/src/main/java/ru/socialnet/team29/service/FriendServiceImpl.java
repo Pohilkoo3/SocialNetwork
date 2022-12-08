@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.socialnet.team29.model.FriendForFront;
 import ru.socialnet.team29.serviceInterface.FriendService;
-import ru.socialnet.team29.serviceInterface.feign.interfaces.DBConnectionFeignInterface;
+import ru.socialnet.team29.serviceInterface.feign.DBConnectionFeignInterface;
 
 import java.util.List;
 import java.util.Map;
