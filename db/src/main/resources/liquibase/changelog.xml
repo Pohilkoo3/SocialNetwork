@@ -1,0 +1,30 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+   <include file="structure/create_schema.xml" relativeToChangelogFile="true"/>
+   <include file="structure/create_post2tag_table.xml" relativeToChangelogFile="true"/>
+   <include file="structure/create_tag_table.xml" relativeToChangelogFile="true"/>
+   <include file="structure/friendship_status_table.xml" relativeToChangelogFile="true"/>
+   <include file="structure/message_table.xml" relativeToChangelogFile="true"/>
+   <include file="structure/post_table.xml" relativeToChangelogFile="true"/>
+   <include file="structure/create_table_friendship.xml" relativeToChangelogFile="true"/>
+   <include file="liquibase/structure/create-table-user.xml"/>
+   <include file="structure/create_post_file_table.xml" relativeToChangelogFile="true"/>
+   <include file="structure/create_table_block_history.xml" relativeToChangelogFile="true"/>
+   <include file="structure/create_table_person.xml" relativeToChangelogFile="true"/>
+   <include file="structure/post_like_table.xml" relativeToChangelogFile="true"/>
+   <include file="structure/post_comment_table.xml" relativeToChangelogFile="true"/>
+   <include file="structure/create_table_notification.xml" relativeToChangelogFile="true"/>
+   <include file="structure/delete_table_script.xml" relativeToChangelogFile="true"/>
+   <include file="structure/created_friendship_status_table.xml" relativeToChangelogFile="true"/>
+   <include file="structure/created_message_table.xml" relativeToChangelogFile="true"/>
+   <include file="structure/created_post_table.xml" relativeToChangelogFile="true"/>
+   <include file="structure/create_table_notification_type.xml" relativeToChangelogFile="true"/>
+   <include file="structure/change_table_person.xml" relativeToChangelogFile="true"/>
+   <include file="structure/change_table_person2.xml" relativeToChangelogFile="true"/>
+   <include file="structure/change_post_table.xml" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>

@@ -1,0 +1,15 @@
+auth:
+  secret: socialnet
+
+server:
+  port: 8086
+  servlet:
+    session:
+      tracking-modes: cookie
+
+  db:
+    port: http://host.docker.internal:8081
+
+frontend:
+    host: http://localhost:8098, http://localhost:8088
+

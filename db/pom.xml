@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ru.socialnet.team29</groupId>
+        <artifactId>root</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring-cloud.version>2021.0.4</spring-cloud.version>
+        <postgresql.version>42.5.0</postgresql.version>
+        <junit.version>4.13.2</junit.version>
+        <jooq.version>3.17.5</jooq.version>
+        <jooq.config>src/main/resources/jooq-config.xml</jooq.config>
+        <db.postgres.host>postgres</db.postgres.host>
+        <db.postgres.name>${postgres_db}</db.postgres.name>
+        <db.postgres.username>${postgres_password}</db.postgres.username>
+        <db.postgres.password>${postgres_user}</db.postgres.password>
+        <db.postgres.url>jdbc:postgresql://${db.postgres.host}/${db.postgres.name}</db.postgres.url>
+        <testcontainers.version>1.17.4</testcontainers.version>
+        <junit_jupiter.version>1.17.4</junit_jupiter.version>
+    </properties>
+    <artifactId>db</artifactId>
+
+    <profiles>
+        <profile>
+            <id>localhost</id>
+            <properties>
+                <db.postgres.host>localhost</db.postgres.host>
+                <db.postgres.name>socialnet</db.postgres.name>
+                <db.postgres.username>admin</db.postgres.username>
+                <db.postgres.password>passWd123</db.postgres.password>
+                <db.postgres.url>jdbc:postgresql://${db.postgres.host}:5455/${db.postgres.name}</db.postgres.url>
+            </properties>
+        </profile>
+    </profiles>
+
+    <dependencies>
+        <dependency>
+            <groupId>ru.socialnet.team29</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq</artifactId>
+            <version>${jooq.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-meta</artifactId>
+            <version>${jooq.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-codegen</artifactId>
+            <version>${jooq.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+
+                <configuration>
+                    <changeLogDirectory>src/main/resources</changeLogDirectory>
+                    <changeLogFile>liquibase/changelog.xml</changeLogFile>
+                    <driver>org.postgresql.Driver</driver>
+                    <url>${db.postgres.url}</url>
+                    <username>${db.postgres.username}</username>
+                    <password>${db.postgres.password}</password>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>update</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-maven</artifactId>
+                <version>${jooq.version}</version>
+
+                <executions>
+                    <execution>
+                        <id>jooq-codegen</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <dependencies>
+                     <dependency>
+                            <groupId>org.postgresql</groupId>
+                            <artifactId>postgresql</artifactId>
+                            <version>${postgresql.version}</version>
+                     </dependency>
+
+                </dependencies>
+
+                <configuration>
+                    <jdbc>
+                        <driver>org.postgresql.Driver</driver>
+                        <url>${db.postgres.url}</url>
+                        <user>${db.postgres.username}</user>
+                        <password>${db.postgres.password}</password>
+                    </jdbc>
+                    <generator>
+                        <database>
+                            <name>org.jooq.meta.postgres.PostgresDatabase</name>
+                            <includes>.*</includes>
+                            <excludes>databasechangelog|databasechangeloglock</excludes>
+                            <inputSchema>socialnet</inputSchema>
+                        </database>
+                        <target>
+                            <packageName>ru.socialnet.team29.domain</packageName>
+                            <directory>target/generated-sources/jooq</directory>
+                        </target>
+                    </generator>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>${testcontainers.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>
