@@ -1,10 +1,11 @@
-package ru.socialnet.team29;
+package ru.socialnet.team29.repository;
 
 
 import lombok.RequiredArgsConstructor;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
+import ru.socialnet.team29.domain.Keys;
 import ru.socialnet.team29.domain.tables.Person;
 import ru.socialnet.team29.domain.tables.records.PersonRecord;
 import ru.socialnet.team29.services.DslContextCustom;
@@ -19,38 +20,44 @@ public class PersonRepository {
     private static DSLContext dsl;
 
 
-    public PersonRecord insert(PersonRecord person) {
-      initDsl();
-        return dsl.insertInto(Person.PERSON)
-                .set(dsl.newRecord(Person.PERSON, person))
+    public PersonRecord insert(PersonRecord personRecord) {
+        initDsl();
+         return dsl.insertInto(Person.PERSON)
+                .set(dsl.newRecord(Person.PERSON, personRecord))
+                 .onDuplicateKeyUpdate()
+                 .set(dsl.newRecord(Person.PERSON, personRecord))
                 .returning()
-                .fetchOne()
-                .into(PersonRecord.class);
+                .fetchOne();
     }
 
-
     public List<PersonRecord> findAll(Condition condition) {
-      initDsl();
+        initDsl();
         return dsl.selectFrom(Person.PERSON)
                 .where(condition)
                 .fetch()
                 .into(PersonRecord.class);
     }
 
-
     public Boolean delete(Integer id) {
-     initDsl();
+        initDsl();
         return dsl.deleteFrom(Person.PERSON)
                 .where(Person.PERSON.ID.eq(id))
                 .execute() == 200;
     }
 
-    public List<PersonRecord> findPersonByEmail(String email) {
+  public Integer findPersonIdByEmail(String email) {
+    initDsl();
+    return dsl.selectFrom(Person.PERSON)
+        .where(Person.PERSON.EMAIL.equalIgnoreCase(email))
+        .fetchOne()
+        .getId();
+  }
+
+    public PersonRecord findPersonByEmail(String email) {
         initDsl();
         return dsl.selectFrom(Person.PERSON)
                 .where(Person.PERSON.EMAIL.equalIgnoreCase(email))
-                .fetch()
-                .into(PersonRecord.class);
+                .fetchOne();
     }
 
     private void initDsl() {

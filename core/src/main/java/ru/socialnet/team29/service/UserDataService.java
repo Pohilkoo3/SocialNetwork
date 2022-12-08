@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.socialnet.team29.answers.MessageAnswer;
@@ -14,7 +15,7 @@ import ru.socialnet.team29.model.Person;
 import ru.socialnet.team29.payloads.ContactConfirmationPayload;
 import ru.socialnet.team29.serviceInterface.feign.interfaces.DBConnectionFeignInterface;
 
-import java.io.IOException;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +23,7 @@ import java.io.IOException;
 public class UserDataService {
 
     private final DBConnectionFeignInterface feignInterface;
+    private final CaptchaService captchaService;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -30,21 +32,27 @@ public class UserDataService {
     }
 
     public CommonAnswer saveNewUserInDb(ContactConfirmationPayload payload) {
-        if (!payload.getPasswd1().equals(payload.getPasswd2()) | payload.getCode().isBlank()) {
+        if (!payload.getPassword1().equals(payload.getPassword2()) | payload.getCode().isBlank()) {
             return getAnswer("invalid_request", "Поля пароль и подтверждение пароля не совпадают, или не заполнено поле code.");
         } else {
             Person person = Person.builder()
                     .firstName(payload.getFirstName())
                     .lastName(payload.getLastName())
-                    .password(payload.getPasswd1())
+                    .password(passwordEncoder.encode(payload.getPassword1()))
+                    .email(payload.getEmail())
+                    .regDate(LocalDateTime.now())
                     .build();
             try {
+                log.info("Заполняем данные пользователя при регистрации {}", person);
                 feignInterface.savePerson(person);
             } catch (Exception e) {
                 return getAnswer("invalid_request", "Во время сохранения произошла ошибка.");
             }
-            return getAnswer("", "");
+            if (captchaService.checkCaptcha(payload.getToken())) {
+                return getAnswer("", "");
+            }
         }
+        return getAnswer("invalid_request", "captcha введена неверно");
     }
 
     private CommonAnswer getAnswer(String error, String description) {
@@ -60,9 +68,12 @@ public class UserDataService {
         return responseUserRegister;
     }
 
-    public Person getPersonByEmail(String email) throws IOException {
-        Person result = feignInterface.getPersonByEmail(email);
-        result.setPassword(passwordEncoder.encode(result.getPassword()));//TODO Убрать, когда в базу данных будут сохраняться пароли с BcryptEncoder
-        return result;
+    public Person getPersonByEmail(String email) {
+        return feignInterface.getPersonByEmail(email);
+    }
+
+    public Person getCurrentAccount() {
+        return feignInterface.getPersonByEmail(
+                SecurityContextHolder.getContext().getAuthentication().getName());
     }
 }
