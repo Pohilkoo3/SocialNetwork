@@ -25,10 +25,24 @@ public class PersonService {
         }
     }
 
+    public Person getPersonByToken(String token) {
+        PersonRecord person = personRepository.findPersonByToken(token);
+        if (person != null) {
+            return personMapper.PersonRecordToPerson(person);
+        } else {
+            throw new NoDataFoundException("No users found such token");
+        }
+    }
+
     public Person savePerson(Person person) {
         log.info("JOOQ добавил данные в БД {}", person);
         personRepository.insert(personMapper.PersonToPersonRecord(person));
         log.info("Отработал метод - personRepository.insert(personMapper.PersonToPersonRecord(person))! Данные попали в Базу Данных! ");
         return person;
     }
-}
+
+    public Person update(Person person) {
+        personRepository.update(personMapper.PersonToPersonRecord(person));
+        log.info("Отработал метод - update Данные попали в Базу Данных! ");
+        return person;
+}}

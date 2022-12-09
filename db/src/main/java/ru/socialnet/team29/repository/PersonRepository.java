@@ -4,6 +4,7 @@ package ru.socialnet.team29.repository;
 import lombok.RequiredArgsConstructor;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
+import org.jooq.exception.DataAccessException;
 import org.springframework.stereotype.Repository;
 import ru.socialnet.team29.domain.Keys;
 import ru.socialnet.team29.domain.tables.Person;
@@ -30,11 +31,21 @@ public class PersonRepository {
                 .fetchOne();
     }
 
+
     public List<PersonRecord> findAll(Condition condition) {
-        initDsl();
+      initDsl();
         return dsl.selectFrom(Person.PERSON)
                 .where(condition)
                 .fetch()
+                .into(PersonRecord.class);
+    }
+
+    public PersonRecord update(PersonRecord personRecord) {
+        return dsl.update(Person.PERSON)
+                .set(dsl.newRecord(Person.PERSON, personRecord))
+                .returning()
+                .fetchOptional()
+                .orElseThrow(() -> new DataAccessException("Error updating entity: " + personRecord.getId()))
                 .into(PersonRecord.class);
     }
 
@@ -59,6 +70,14 @@ public class PersonRepository {
                 .where(Person.PERSON.EMAIL.equalIgnoreCase(email))
                 .fetchOne();
     }
+
+    public PersonRecord findPersonByToken(String token) {
+        initDsl();
+        return dsl.selectFrom(Person.PERSON)
+                .where(Person.PERSON.TOKEN.equalIgnoreCase(token))
+                .fetchOne();
+    }
+
 
     private void initDsl() {
         if (dsl == null) {
