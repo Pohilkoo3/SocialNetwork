@@ -10,7 +10,7 @@
         <tableExists schemaName="socialnet" tableName="notificationCommon"/>
       </not>
     </preConditions>
-    <createTable tableName="notificationCommon" schemaName="socialnet" remarks="Оповещения">
+    <createTable tableName="notification" schemaName="socialnet" remarks="Оповещения">
       <column autoIncrement="true" name="id" type="integer" remarks="Идентификатор">
         <constraints primaryKey="true" nullable="false"/>
       </column>
