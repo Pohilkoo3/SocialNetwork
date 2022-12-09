@@ -5,11 +5,6 @@
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
     <changeSet id="fill-notification-type" author="Pokhilko">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <tableExists tableName="notification_type"/>
-            </not>
-        </preConditions>
         <insert  schemaName="socialnet"
                  tableName="notification_type">
             <column  name="code"  value="1"/>

@@ -5,7 +5,7 @@ import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 import ru.socialnet.team29.answers.AddNewNotification;
 import ru.socialnet.team29.answers.NotificationForFront;
-import ru.socialnet.team29.domain.tables.Notificationcommon;
+import ru.socialnet.team29.domain.tables.Notification;
 import ru.socialnet.team29.mappers.NotificationMapperClass;
 import ru.socialnet.team29.model.NotificationCommon;
 import ru.socialnet.team29.payloads.AddNotificationPayload;
@@ -30,8 +30,8 @@ public class NotificationRepository {
 
     public Integer getCountNotificationByPersonId(Integer id) {
         initDsl();
-        return dsl.selectFrom(Notificationcommon.NOTIFICATIONCOMMON)
-                .where(Notificationcommon.NOTIFICATIONCOMMON.PERSON_ID.eq(id))
+        return dsl.selectFrom(Notification.NOTIFICATION)
+                .where(Notification.NOTIFICATION.PERSON_ID.eq(id))
                 .fetch()
                 .size();
     }
@@ -39,8 +39,8 @@ public class NotificationRepository {
 
     public List<NotificationCommon> getNotificationCommonTrain(Integer idPerson) {
         initDsl();
-        List<NotificationCommon> notificationCommonList = dsl.selectFrom(Notificationcommon.NOTIFICATIONCOMMON)
-                .where(Notificationcommon.NOTIFICATIONCOMMON.PERSON_ID.eq(idPerson))
+        List<NotificationCommon> notificationCommonList = dsl.selectFrom(Notification.NOTIFICATION)
+                .where(Notification.NOTIFICATION.PERSON_ID.eq(idPerson))
                 .fetch()
                 .into(NotificationCommon.class);
         return notificationCommonList;
@@ -49,8 +49,8 @@ public class NotificationRepository {
 
     public List<NotificationForFront> getAllNotificationsByPersonsId(Integer idPerson) {
         initDsl();
-        List<NotificationCommon> notificationCommonList = dsl.selectFrom(Notificationcommon.NOTIFICATIONCOMMON)
-                .where(Notificationcommon.NOTIFICATIONCOMMON.PERSON_ID.eq(idPerson))
+        List<NotificationCommon> notificationCommonList = dsl.selectFrom(Notification.NOTIFICATION)
+                .where(Notification.NOTIFICATION.PERSON_ID.eq(idPerson))
                 .fetch()
                 .into(NotificationCommon.class);
         return notificationMapperClass.listNotificationCommonToListNotificationForFront(notificationCommonList);
@@ -59,8 +59,8 @@ public class NotificationRepository {
     public AddNewNotification addNewNotification(AddNotificationPayload payload) throws NullPointerException {
         initDsl();
         NotificationCommon notificationCommon = notificationMapperClass.addNotificationPayloadToNotificationCommon(payload);
-        NotificationCommon notificationCommonSaved = dsl.insertInto(Notificationcommon.NOTIFICATIONCOMMON)
-                .set(dsl.newRecord(Notificationcommon.NOTIFICATIONCOMMON, notificationCommon))
+        NotificationCommon notificationCommonSaved = dsl.insertInto(Notification.NOTIFICATION)
+                .set(dsl.newRecord(Notification.NOTIFICATION, notificationCommon))
                 .returning()
                 .fetchOne()
                 .into(NotificationCommon.class);
@@ -70,8 +70,8 @@ public class NotificationRepository {
 
     public NotificationCommon addNewNotificationTest(NotificationCommon notificationCommon) {
         initDsl();
-        return dsl.insertInto(Notificationcommon.NOTIFICATIONCOMMON)
-                .set(dsl.newRecord(Notificationcommon.NOTIFICATIONCOMMON, notificationCommon))
+        return dsl.insertInto(Notification.NOTIFICATION)
+                .set(dsl.newRecord(Notification.NOTIFICATION, notificationCommon))
                 .returning()
                 .fetchOne()
                 .into(NotificationCommon.class);
