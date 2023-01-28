@@ -2,15 +2,11 @@ package ru.socialnet.team29.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.socialnet.team29.model.City;
-import ru.socialnet.team29.model.Country;
 import ru.socialnet.team29.model.Person;
 import ru.socialnet.team29.model.ProfileResponse;
-import ru.socialnet.team29.model.enums.BlockStatus;
-import ru.socialnet.team29.model.enums.MessagePermission;
 import ru.socialnet.team29.serviceInterface.ProfileService;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Slf4j
 @Service
@@ -32,7 +28,7 @@ public class ProfileServiceImpl implements ProfileService {
                         .firstName("Петр")
                         .lastName("Петрович")
 
-                        .birthDate(LocalDateTime.now())
+                        .birthDate(OffsetDateTime.now())
                         .email("petr@mail.ru")
                         .phone("89100000000")
                         .photo("https://...../photos/image123.jpg")
