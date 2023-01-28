@@ -53,7 +53,7 @@ public class CommentRepository {
                 .execute() == 1;
     }
 
-    public PostCommentRecord update(PostCommentRecord postCommentRecord) {
+    public  PostCommentRecord update(PostCommentRecord postCommentRecord) {
         return dsl.update(PostComment.POST_COMMENT)
                 .set(PostComment.POST_COMMENT.from(postCommentRecord))
                 .where(PostComment.POST_COMMENT.ID.eq(postCommentRecord.getId()))

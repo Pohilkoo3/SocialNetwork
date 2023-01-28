@@ -7,7 +7,7 @@
     <changeSet id="create_table_user" author="Pokhilko">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="user"/>
+                <tableExists schemaName="socialnet" tableName="user"/>
             </not>
         </preConditions>
         <createTable tableName="user" schemaName="socialnet" remarks="Модераторы и администраторы">

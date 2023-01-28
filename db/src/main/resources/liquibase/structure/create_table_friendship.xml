@@ -7,7 +7,7 @@
     <changeSet id="create_table_friendship" author="Pokhilko">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="friendship"/>
+                <tableExists schemaName="socialnet" tableName="friendship"/>
             </not>
         </preConditions>
         <createTable tableName="friendship" schemaName="socialnet" remarks="Дружба">

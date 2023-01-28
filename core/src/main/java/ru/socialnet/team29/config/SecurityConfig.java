@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/v1/storage").permitAll()
                 .anyRequest().authenticated();
 
-        http.addFilterAfter(filter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override

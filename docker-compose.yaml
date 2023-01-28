@@ -19,7 +19,7 @@ services:
       - "social-net"
 
   frontend:
-    image: 'kohgutepdev/front:latest'
+    image: 'pohikoo/skillgroup29-frontend'
     container_name: frontend
     ports:
       - "8098:80"
@@ -28,7 +28,7 @@ services:
       - "social-net"
 
   core:
-    image: 'kohgutepdev/team29socialnet-core:latest'
+    image: 'pohikoo/team29socialnet-core'
     container_name: core-service
     environment:
       server.db.port: http://db-service:8081
@@ -44,7 +44,7 @@ services:
       - "social-net"
 
   db:
-    image: 'kohgutepdev/team29socialnet-db:latest'
+    image: 'pohikoo/team29socialnet-db'
     container_name: db-service
     depends_on:
       - postgres
